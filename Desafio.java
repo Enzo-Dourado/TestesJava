@@ -23,20 +23,22 @@ public class Desafio {
 
         tipoConta = tipoConta.toLowerCase();
 
-        if (tipoConta.equals("poupanca") || tipoConta.equals("corrente")) {
+        if (tipoConta.equals("poupanca") || tipoConta.equals("corrente") && saldo > 0) {
             System.out.println("Dados salvos com sucesso!");
             dadosCorretos = true;
         } else {
-            System.out.println("Você digitou um tipo de conta que não foi encontrado");
+            System.out.println("Você digitou um tipo de conta que não foi encontrado ou um saldo negativo!");
             dadosCorretos = false;
         }
 
-        System.out.println(asterisco);
-        System.out.println("===== DADOS DA CONTA =====");
-        System.out.println("Nome: " + nome);
-        System.out.println("Tipo da Conta: " + tipoConta);
-        System.out.println("Saldo: " + saldo);
-        System.out.println(asterisco);
+        if (dadosCorretos) {
+            System.out.println(asterisco);
+            System.out.println("===== DADOS DA CONTA =====");
+            System.out.println("Nome: " + nome);
+            System.out.println("Tipo da Conta: " + tipoConta);
+            System.out.println("Saldo: " + saldo);
+            System.out.println(asterisco);
+        }
 
         while (dadosCorretos && operacao != 4) {
             System.out.format(""" 
@@ -73,9 +75,15 @@ public class Desafio {
                 System.out.println("===== TRANSFERÊNCIAS =====");
                 System.out.print("Digite o valor que deseja transferir: ");
                 double transferencia = sc.nextDouble();
-                saldo -= transferencia;
-                System.out.println("Transferência realizada com sucesso!");
-                System.out.println("Novo Saldo: " + saldo);
+
+                if (transferencia < saldo) {
+                    saldo -= transferencia;
+                    System.out.println("Transferência realizada com sucesso!");
+                    System.out.println("Novo Saldo: " + saldo);
+
+                } else {
+                    System.out.println("Transferência não realizada, SALDO INSUFICIENTE!");
+                }
                 System.out.println(asterisco);
 
             } else if (operacao == 4) {
