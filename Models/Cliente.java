@@ -6,6 +6,14 @@ public class Cliente {
     private String agencia;
     private String conta;
     private double saldo;
+    private double limite;
+
+    public Cliente() {
+        this.limite = 50;
+    }
+    public double getLimite() {
+        return limite;
+    }
 
     public int getId() {
         return id;
@@ -54,7 +62,20 @@ public class Cliente {
     public void saca(double valor) {
         this.saldo -= valor;
     }
-
+    public void sacaComLimite(double valor) {
+        if (this.saldo >= valor) {
+            this.saldo -= valor;
+        } else if (this.saldo < valor && this.limite < valor) {
+            System.out.println("Saldo insuficiente ou Limite atingido!");
+        }
+        else {
+            this.limite -= valor;
+            if (this.limite <= 0) {
+                System.out.println("Limite atingido!");
+                this.limite = 0;
+            }
+        }
+    }
     public double emiteSaldo() {
         return this.saldo;
     }
